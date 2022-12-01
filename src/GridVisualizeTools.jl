@@ -1,5 +1,21 @@
 module GridVisualizeTools
+using Colors
+using ColorSchemes
+using GeometryBasics
 
-greet() = print("Hello World!")
+include("colors.jl")
+export region_cmap, bregion_cmap, rgbtuple
+
+include("extraction.jl")
+extract_visible_cells3D, extract_visible_bfaces3D
+
+include("marching.jl")
+export marching_tetrahedra, marching_triangles
+
+include("markerpoints.jl")
+export markerpoints
+
+include("planeslevels.jl")
+export makeplanes, isolevels
 
 end # module GridVisualizeTools
