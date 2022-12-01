@@ -1,7 +1,9 @@
 module GridVisualizeTools
 using Colors
+using StaticArrays
 using ColorSchemes
 using GeometryBasics
+using DocStringExtensions
 
 include("colors.jl")
 export region_cmap, bregion_cmap, rgbtuple
