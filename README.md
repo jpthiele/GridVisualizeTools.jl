@@ -7,6 +7,6 @@ GridVisualizeTools.jl
 =====================
 
 Lean package providing a number of tools used  in
-[GridVisualize.jl](https://gihub.com/j-fu/GridVisualize.jl) and
-[PlutoVista.jl](https://gihub.com/j-fu/PlutoVista.jl). Possibly also
+[GridVisualize.jl](https://github.com/j-fu/GridVisualize.jl) and
+[PlutoVista.jl](https://github.com/j-fu/PlutoVista.jl). Possibly also
 useful for other packages.
