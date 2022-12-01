@@ -1,0 +1,9 @@
+QUARRY
+.project.jl
+docs/build
+*~
+*.html
+*.svg
+Manifest.toml
+.repl_history.jl
+
