@@ -15,7 +15,6 @@ region_cmap(n)=distinguishable_colors(max(5,n),
 $(SIGNATURES)
 
 Create customized distinguishable colormap for boundary regions.
-
 These use fully saturated colors.
 """
 bregion_cmap(n)=distinguishable_colors(max(5,n),

@@ -10,6 +10,12 @@ function makeplanes(mmin,mmax,n)
     end
 end
 
+"""
+$(SIGNATURES)
+
+For vectors of x, y and z coordinates, create equations for
+planes parallel to the coordinate axes.    
+"""
 function makeplanes(xyzmin,xyzmax,x,y,z)
     planes=Vector{Vector{Float64}}(undef,0)
 #    ε=1.0e-1*(xyzmax.-xyzmin)
