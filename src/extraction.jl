@@ -9,11 +9,13 @@ or trisurf (pyplot)
 """
 function extract_visible_cells3D(coord,cellnodes,cellregions,nregions,xyzcut;
                                  primepoints=zeros(0,0),Tp=SVector{3,Float32},Tf=SVector{3,Int32})
-    
-    function take(coord,simplex,xyzcut)
-        all_lt=@MVector ones(Bool,3)
-        all_gt=@MVector ones(Bool,3)
+    all_lt=ones(Bool,3)
+    all_gt=ones(Bool,3)
+
+    function take(coord,simplex,xyzcut,all_lt,all_gt)
         for idim=1:3
+            all_lt[idim]=true
+            all_gt[idim]=true
             for inode=1:4
                 c=coord[idim,simplex[inode]]-xyzcut[idim]
                 all_lt[idim]=all_lt[idim] && (c<0.0)
@@ -42,7 +44,7 @@ function extract_visible_cells3D(coord,cellnodes,cellregions,nregions,xyzcut;
         for i=1:4
             tet[i]=cellnodes[i,itet]
         end
-        if take(coord,tet,xyzcut)
+        if take(coord,tet,xyzcut,all_lt,all_gt)
             npts=size(points[iregion],1)
             @views begin
                 push!(points[iregion],coord[:,cellnodes[1,itet]])

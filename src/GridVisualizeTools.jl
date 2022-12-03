@@ -1,8 +1,7 @@
 module GridVisualizeTools
 using Colors
-using StaticArrays
+using StaticArraysCore
 using ColorSchemes
-using GeometryBasics
 using DocStringExtensions
 
 include("colors.jl")
