@@ -40,3 +40,34 @@ function makeplanes(xyzmin,xyzmax,x,y,z)
     end
     planes
 end
+
+"""
+    $(SIGNATURES)
+
+Update levels, limits, colorbartics based on vector given in func.
+
+- if `limits[1]>limits[2]`, replace it by `extrema(func)`.
+- if levels is a number, replace it with a linear range in `limits` of length levels+2
+- if colorbarticks is `nothing` replace it with levels, otherwise, if it is a number, replace it
+  with a linear range of corresponding length
+"""
+function makeisolevels(func,levels,limits, colorbarticks)
+    
+    if limits[1]>limits[2] 
+        limits=extrema(func)
+    end
+    
+    if isa(levels,Number)
+        levels=collect(LinRange(limits[1],limits[2],levels+2))
+    end
+    
+    if colorbarticks == nothing
+        colorbarticks = levels
+    elseif isa(colorbarticks,Number)
+        colorbarticks = collect(limits[1]:(limits[2]-limits[1])/(colorbarticks-1):limits[2])
+    end
+    
+    #    map(t->round(t,sigdigits=4),levels),limits,map(t->round(t,sigdigits=4),colorbarticks)
+    levels,limits,colorbarticks
+
+end

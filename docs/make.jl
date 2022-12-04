@@ -1,7 +1,7 @@
 using Documenter, GridVisualizeTools, ColorTypes
 
 function mkdocs()
-    DocMeta.setdocmeta!(GridVisualizeTools, :DocTestSetup, :(using GridVisualizeTools, ColorTypes); recursive=true)
+    DocMeta.setdocmeta!(GridVisualizeTools, :DocTestSetup, :(using GridVisualizeTools, ColorTypes, Colors); recursive=true)
     makedocs(sitename="GridVisualizeTools.jl",
              modules = [GridVisualizeTools],
              clean = false, 
