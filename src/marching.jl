@@ -200,7 +200,7 @@ end
 
 Collect isoline snippets on triangles ready for linesegments!
 """
-function marching_triangles(coord,cellnodes,func,levels; Tp=SVector{2,Float32})
+function marching_triangles(coord,cellnodes,func,levels; Tc=Float32, Tp=SVector{2,Tc})
     points=Vector{Tp}(undef,0)
     function isect(nodes)
         (i1,i2,i3)=(1,2,3)
@@ -240,8 +240,8 @@ function marching_triangles(coord,cellnodes,func,levels; Tp=SVector{2,Float32})
 	            x2=coord[1,n2]+α*dx32
 	            y2=coord[2,n2]+α*dy32
                 end
-                push!(points,(x1,y1))
-                push!(points,(x2,y2))
+                push!(points,SVector{2,Tc}((x1,y1)))
+                push!(points,SVector{2,Tc}((x2,y2)))
             end
         end
     end
