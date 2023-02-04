@@ -1,7 +1,7 @@
 name = "GridVisualizeTools"
 uuid = "5573ae12-3b76-41d9-b48c-81d0b6e61cc5"
 authors = ["Jürgen Fuhrmann <juergen-fuhrmann@web.de>"]
-version = "0.2.1"
+version = "0.3.0"
 
 [deps]
 ColorSchemes = "35d6a980-a343-548e-a6ea-1d62b119f2f4"

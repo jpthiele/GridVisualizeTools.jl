@@ -17,6 +17,6 @@ include("markerpoints.jl")
 export markerpoints
 
 include("planeslevels.jl")
-export makeplanes,makeisolevels
+export makeplanes, makeisolevels
 
 end # module GridVisualizeTools
