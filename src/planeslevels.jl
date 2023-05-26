@@ -55,7 +55,7 @@ function makeisolevels(func::Vector{T}, levels, limits, colorbarticks) where {T 
     makeisolevels([func], levels, limits, colorbarticks)
 end
 
-function makeisolevels(funcs::Vector{Vector{T}}, levels, limits, colorbarticks) where {T <: Number}
+function makeisolevels(funcs::Vector{T}, levels, limits, colorbarticks) where {T <: AbstractVector}
     if limits[1] > limits[2]
         ext = extrema.(funcs)
         limits = (minimum(first.(ext)), maximum(last.(ext)))
