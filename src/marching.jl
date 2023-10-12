@@ -3,20 +3,20 @@
   Calculate intersections between tetrahedron with given piecewise linear
   function data and plane 
 
-  Adapted from https://github.com/j-fu/gltools/blob/master/glm-3d.c#L341
+  Adapted from [gltools](https://github.com/j-fu/gltools/blob/master/glm-3d.c#L341).
  
   A non-empty intersection is either a triangle or a planar quadrilateral,
-  define by either 3 or 4 intersection points between tetrahedron edges
+  defined by either 3 or 4 intersection points between tetrahedron edges
   and the plane.
 
   Input: 
-  -       pointlist: 3xN array of grid point coordinates
-  -    node_indices: 4 element array of node indices (pointing into pointlist and function_values)
-  -   planeq_values: 4 element array of plane equation evaluated at the node coordinates
+  - pointlist: 3xN array of grid point coordinates
+  - node_indices: 4 element array of node indices (pointing into pointlist and function_values)
+  - planeq_values: 4 element array of plane equation evaluated at the node coordinates
   - function_values: N element array of function values
 
   Mutates:
-  -  ixcoord: 3x4 array of plane - tetedge intersection coordinates
+  - ixcoord: 3x4 array of plane - tetedge intersection coordinates
   - ixvalues: 4 element array of fuction values at plane - tetdedge intersections
 
   Returns:

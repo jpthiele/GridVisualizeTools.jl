@@ -115,3 +115,11 @@ makeisolevels(collect(0:0.1:10), 1, (1,-1),nothing)
 # output
 ([0.0, 5.0, 10.0], (0.0, 10.0), [0.0, 5.0, 10.0])
 ```
+
+
+## Private API
+
+```@docs
+GridVisualizeTools.tet_x_plane!
+```
+
