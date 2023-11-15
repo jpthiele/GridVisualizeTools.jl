@@ -1,8 +1,10 @@
 module GridVisualizeTools
-using Colors
-using StaticArraysCore
-using ColorSchemes
-using DocStringExtensions
+
+import Colors
+import ColorSchemes
+
+using DocStringExtensions: SIGNATURES, TYPEDEF, TYPEDSIGNATURES
+using StaticArraysCore: SVector
 
 include("colors.jl")
 export region_cmap, bregion_cmap, rgbtuple
