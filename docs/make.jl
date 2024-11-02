@@ -7,12 +7,12 @@ function mkdocs()
              clean = false,
              doctest = true,
              authors = "J. Fuhrmann",
-             repo = "https://github.com/j-fu/GridVisualizeTools.jl",
+             repo = "https://github.com/WIAS-PDELib/GridVisualizeTools.jl",
              pages = [
                  "Home" => "index.md",
              ])
     if !isinteractive()
-        deploydocs(; repo = "github.com/j-fu/GridVisualizeTools.jl.git", devbranch = "main")
+        deploydocs(; repo = "github.com/WIAS-PDELib/GridVisualizeTools.jl.git", devbranch = "main")
     end
 end
 
