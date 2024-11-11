@@ -10,7 +10,7 @@ region_cmap(10)[1]
 
 # output
 
-RGB{Float64}(0.85,0.6,0.6)
+RGB{Float64}(0.85, 0.6, 0.6)
 ```
 
 """
@@ -33,7 +33,7 @@ bregion_cmap(10)[1]
 
 # output
 
-RGB{Float64}(1.0,0.0,0.0)
+RGB{Float64}(1.0, 0.0, 0.0)
 ```
 
 """
@@ -66,7 +66,7 @@ Create RGB color from color name symbol.
 
 ```jldoctest
 julia> Colors.RGB(:red)
-RGB{Float64}(1.0,0.0,0.0)
+RGB{Float64}(1.0, 0.0, 0.0)
 ```
 """
 Colors.RGB(c::Symbol) = Colors.RGB(String(c))
@@ -78,7 +78,7 @@ Create RGB color from tuple
 
 ```jldoctest
 julia> Colors.RGB((1.0,0,0))
-RGB{Float64}(1.0,0.0,0.0)
+RGB{Float64}(1.0, 0.0, 0.0)
 ```
 """
 Colors.RGB(c::Tuple) = Colors.RGB(c...)
