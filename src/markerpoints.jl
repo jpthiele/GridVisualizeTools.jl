@@ -5,7 +5,7 @@ $(SIGNATURES)
 Assume that `points` are nodes of a polyline.
 Place `nmarkers` equidistant markers  at the polyline, under
 the assumption that the points are transformed via the transformation
-matrix M vor visualization.
+matrix M for visualization.
 """
 function markerpoints(points, nmarkers, transform)
     dist(p1, p2) = norm(transform * (p1 - p2))
