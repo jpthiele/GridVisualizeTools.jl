@@ -36,18 +36,6 @@ rgbtuple(:red)
 (1.0,1.0,1.0)
 ```
 
-```@docs
-ColorTypes.RGB
-```
-
-```@example
-using ColorTypes,GridVisualizeTools # hide
-RGB(:red)
-```
-```@example
-using ColorTypes,GridVisualizeTools # hide
-RGB("green")
-```
 
 ## Visibility handling of grid cells
 
