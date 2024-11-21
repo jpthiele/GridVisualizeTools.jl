@@ -73,3 +73,53 @@ julia> rgbtuple(RGB(0.0,1,0))
 ```
 """
 rgbtuple(c::Colors.RGB) = (Colors.red(c), Colors.green(c), Colors.blue(c))
+
+
+"""
+    rgbcolor(col::Any)
+
+Return Colors.RGB object from string or symbol. 
+
+```jldoctest
+julia> rgbcolor(:red)
+RGB{Float64}(1.0, 0.0, 0.0)
+
+julia> rgbcolor("red")
+RGB{Float64}(1.0, 0.0, 0.0)
+```
+
+"""
+rgbcolor(col::Any) = parse(Colors.RGB{Float64},col) 
+
+
+"""
+    rgbcolor(col::RGB)
+
+Pass through of RGB color object.
+```jldoctest
+julia> rgbcolor(RGB(1.0,0.0, 0.0))
+RGB{Float64}(1.0, 0.0, 0.0)
+```
+
+"""
+rgbcolor(col::Colors.RGB) = col
+
+"""
+    rgbcolor(col::Tuple)
+
+Create RGB color object from tuple
+```jldoctest
+julia> rgbcolor((1.0,0.0, 0.0))
+RGB{Float64}(1.0, 0.0, 0.0)
+```
+
+"""
+function rgbcolor(col::Tuple)
+    # Base.depwarn(
+    #     "Setting custom colors as `Tuple`, e.g. `color=(0.,0.,1.)` will be removed in the next major release. "*
+    #     "Please use color=RGB(0.,0.,1.) instead.",
+    #     :update_lines,
+    # )
+    return Colors.RGB(col...)
+end
+

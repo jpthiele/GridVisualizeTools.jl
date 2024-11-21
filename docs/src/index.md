@@ -33,7 +33,23 @@ rgbtuple
 rgbtuple(:red)
 # output
 
-(1.0,1.0,1.0)
+(1.0,0.0,0.0)
+```
+```@docs
+rgbcolor
+```
+
+```@jldoctest
+rgbcolor(:red)
+# output
+
+RGB{Float64}(1.0,0.0,0.0)
+```
+```@jldoctest
+rgbcolor(1.0, 0.0, 0.0)
+# output
+
+RGB{Float64}(1.0,0.0,0.0)
 ```
 
 

@@ -7,7 +7,7 @@ using DocStringExtensions: SIGNATURES, TYPEDEF, TYPEDSIGNATURES
 using StaticArraysCore: SVector
 
 include("colors.jl")
-export region_cmap, bregion_cmap, rgbtuple
+export region_cmap, bregion_cmap, rgbtuple, rgbcolor
 
 include("extraction.jl")
 export extract_visible_cells3D, extract_visible_bfaces3D
