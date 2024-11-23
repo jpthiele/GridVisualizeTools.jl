@@ -33,21 +33,25 @@ rgbtuple
 rgbtuple(:red)
 # output
 
-(1.0,1.0,1.0)
+(1.0,0.0,0.0)
 ```
-
 ```@docs
-ColorTypes.RGB
+rgbcolor
 ```
 
-```@example
-using ColorTypes,GridVisualizeTools # hide
-RGB(:red)
+```@jldoctest
+rgbcolor(:red)
+# output
+
+RGB{Float64}(1.0,0.0,0.0)
 ```
-```@example
-using ColorTypes,GridVisualizeTools # hide
-RGB("green")
+```@jldoctest
+rgbcolor(1.0, 0.0, 0.0)
+# output
+
+RGB{Float64}(1.0,0.0,0.0)
 ```
+
 
 ## Visibility handling of grid cells
 

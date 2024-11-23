@@ -1,4 +1,4 @@
-using Documenter, GridVisualizeTools, ColorTypes
+using Documenter, GridVisualizeTools, ColorTypes, Colors
 
 function mkdocs()
     DocMeta.setdocmeta!(GridVisualizeTools, :DocTestSetup, :(using GridVisualizeTools, ColorTypes, Colors); recursive = true)

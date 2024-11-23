@@ -17,7 +17,7 @@
 
   Mutates:
   - ixcoord: 3x4 array of plane - tetedge intersection coordinates
-  - ixvalues: 4 element array of fuction values at plane - tetdedge intersections
+  - ixvalues: 4 element array of function values at plane - tetdedge intersections
 
   Returns:
   - nxs,ixcoord,ixvalues
@@ -67,7 +67,7 @@ end
  flevel could be flevels
  xyzcut could be a vector of plane data
  perhaps we can also collect isolines.
- Just an optional collector parameter, defaulting to somethig makie independent.
+ Just an optional collector parameter, defaulting to something makie independent.
 
     Better yet:
 
@@ -114,7 +114,7 @@ Return values: (points, tris, values)
 
 These can be readily turned into a mesh with function values on it.
 
-Caveat: points with similar coordinates are not identified, e.g. an intersection of a plane and an edge will generate as many edge intersection points as there are tetrahedra adjacent to that edge. As a consequence, normal calculations for visualization alway will end up with facet normals, not point normals, and the visual impression of a rendered isosurface will show its piecewise linear genealogy.
+Caveat: points with similar coordinates are not identified, e.g. an intersection of a plane and an edge will generate as many edge intersection points as there are tetrahedra adjacent to that edge. As a consequence, normal calculations for visualization always will end up with facet normals, not point normals, and the visual impression of a rendered isosurface will show its piecewise linear genealogy.
 
 """
 function marching_tetrahedra(coord::Matrix{Tc},
