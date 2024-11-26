@@ -14,4 +14,3 @@ All notable changes to this project will be documented in this file.
 - Qualified import
 - Format
 - V1.0: non-breaking but time for real semver
-
