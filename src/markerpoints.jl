@@ -11,7 +11,7 @@ function markerpoints(points, nmarkers, transform)
     dist(p1, p2) = norm(transform * (p1 - p2))
 
     llen = 0.0
-    for i = 2:length(points)
+    for i in 2:length(points)
         llen += dist(points[i], points[i - 1])
     end
 
@@ -36,5 +36,5 @@ function markerpoints(points, nmarkers, transform)
             lnext = lnext + mdist
         end
     end
-    push!(mpoints, points[end])
+    return push!(mpoints, points[end])
 end
