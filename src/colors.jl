@@ -15,11 +15,13 @@ RGB{Float64}(0.85, 0.6, 0.6)
 
 """
 function region_cmap(n)
-    ColorSchemes.distinguishable_colors(n,
-                                        [Colors.RGB(0.85, 0.6, 0.6), Colors.RGB(0.6, 0.85, 0.6), Colors.RGB(0.6, 0.6, 0.85)];
-                                        lchoices = range(70; stop = 80, length = 5),
-                                        cchoices = range(25; stop = 65, length = 15),
-                                        hchoices = range(20; stop = 360, length = 15))
+    return ColorSchemes.distinguishable_colors(
+        n,
+        [Colors.RGB(0.85, 0.6, 0.6), Colors.RGB(0.6, 0.85, 0.6), Colors.RGB(0.6, 0.6, 0.85)];
+        lchoices = range(70; stop = 80, length = 5),
+        cchoices = range(25; stop = 65, length = 15),
+        hchoices = range(20; stop = 360, length = 15)
+    )
 end
 
 """
@@ -38,11 +40,13 @@ RGB{Float64}(1.0, 0.0, 0.0)
 
 """
 function bregion_cmap(n)
-    ColorSchemes.distinguishable_colors(n,
-                                        [Colors.RGB(1.0, 0.0, 0.0), Colors.RGB(0.0, 1.0, 0.0), Colors.RGB(0.0, 0.0, 1.0)];
-                                        lchoices = range(50; stop = 75, length = 10),
-                                        cchoices = range(75; stop = 100, length = 10),
-                                        hchoices = range(20; stop = 360, length = 30))
+    return ColorSchemes.distinguishable_colors(
+        n,
+        [Colors.RGB(1.0, 0.0, 0.0), Colors.RGB(0.0, 1.0, 0.0), Colors.RGB(0.0, 0.0, 1.0)];
+        lchoices = range(50; stop = 75, length = 10),
+        cchoices = range(75; stop = 100, length = 10),
+        hchoices = range(20; stop = 360, length = 30)
+    )
 end
 
 """
@@ -56,7 +60,7 @@ julia> rgbtuple("red")
 (1.0, 0.0, 0.0)
 ```
 """
-rgbtuple(c) = rgbtuple(parse(Colors.RGB{Float64},c))
+rgbtuple(c) = rgbtuple(parse(Colors.RGB{Float64}, c))
 
 """
 $(SIGNATURES)
@@ -85,7 +89,7 @@ RGB{Float64}(1.0, 0.0, 0.0)
 ```
 
 """
-rgbcolor(col::Any) = parse(Colors.RGB{Float64},col) 
+rgbcolor(col::Any) = parse(Colors.RGB{Float64}, col)
 
 
 """

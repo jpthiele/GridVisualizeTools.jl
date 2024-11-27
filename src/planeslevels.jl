@@ -1,5 +1,5 @@
 function makeplanes(mmin, mmax, n)
-    if isa(n, Number)
+    return if isa(n, Number)
         if n == 0
             return [Inf]
         end
@@ -24,21 +24,21 @@ function makeplanes(xyzmin, xyzmax, x, y, z)
     Y = makeplanes(xyzmin[2], xyzmax[2], y)
     Z = makeplanes(xyzmin[3], xyzmax[3], z)
 
-    for i = 1:length(X)
+    for i in 1:length(X)
         x = X[i]
         x > xyzmin[1] && x < xyzmax[1] && push!(planes, [1, 0, 0, -x])
     end
 
-    for i = 1:length(Y)
+    for i in 1:length(Y)
         y = Y[i]
         y > xyzmin[2] && y < xyzmax[2] && push!(planes, [0, 1, 0, -y])
     end
 
-    for i = 1:length(Z)
+    for i in 1:length(Z)
         z = Z[i]
         z > xyzmin[3] && z < xyzmax[3] && push!(planes, [0, 0, 1, -z])
     end
-    planes
+    return planes
 end
 
 """
@@ -52,7 +52,7 @@ Update levels, limits, colorbartics based on vector given in func.
   otherwise, if it is a number, replace it  with a linear range of corresponding length
 """
 function makeisolevels(func::Vector{T}, levels, limits, colorbarticks) where {T <: Number}
-    makeisolevels([func], levels, limits, colorbarticks)
+    return makeisolevels([func], levels, limits, colorbarticks)
 end
 
 function makeisolevels(funcs::Vector{T}, levels, limits, colorbarticks) where {T <: AbstractVector}
@@ -72,5 +72,5 @@ function makeisolevels(funcs::Vector{T}, levels, limits, colorbarticks) where {T
     end
 
     #    map(t->round(t,sigdigits=4),levels),limits,map(t->round(t,sigdigits=4),colorbarticks)
-    levels, limits, colorbarticks
+    return levels, limits, colorbarticks
 end
