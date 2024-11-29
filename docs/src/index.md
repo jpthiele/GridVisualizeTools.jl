@@ -1,10 +1,8 @@
-```@eval
-using Markdown
-Markdown.parse("""
-$(read("../../README.md",String))
-""")
-```
+# GridVisualizeTools.jl
 
+```@docs
+GridVisualizeTools
+```
 
 ## Color and colormaps
 

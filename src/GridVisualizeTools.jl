@@ -1,3 +1,8 @@
+"""
+    GridVisualizeTools
+
+$(read(joinpath(@__DIR__, "..", "README.md"), String))
+"""
 module GridVisualizeTools
 
 import Colors
