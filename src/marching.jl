@@ -259,38 +259,70 @@ end
 """
     $(SIGNATURES)
 
-Collect isoline snippets on triangles ready for linesegments!
+March through the given grid and extract points and values for given iso-line levels and/or given intersection lines.
+From the returned point list and value list a line plot can be created.
+
+Input:
+    coord: matrix storing the coordinates of the grid
+    cellnodes: connectivity matrix
+    func: function on the grid nodes to be evaluated
+    lines: vector of line definitions [a,b,c], s.t., ax + by + c = 0 defines a line
+    levels: vector of levels for the iso-surface
+
+Output:
+    points: vector of 2D points of the intersections of the grid with the iso-surfaces or lines
+    adjacencies: vector of 2D vectors storing connected points in the grid
+    value: interpolated values of `func` at the intersection points
+
+Note that passing both nonempty `lines` and `levels` will create a result with both types of points mixed.
 """
 function marching_triangles(
-        coord::Matrix{Tv},
+        coord::Matrix{Tc},
         cellnodes::Matrix{Ti},
         func,
+        lines,
         levels;
-        Tc = Float32,
-        Tp = SVector{2, Tc}
-    ) where {Tv <: Number, Ti <: Number}
-    return marching_triangles([coord], [cellnodes], [func], levels; Tc, Tp)
+        Tv = Float32,
+        Tp = SVector{2, Tv}
+    ) where {Tc <: Number, Ti <: Number}
+    return marching_triangles([coord], [cellnodes], [func], lines, levels; Tv, Tp)
 end
 
+
+"""
+    $(SIGNATURES)
+
+
+Variant of `marching_tetrahedra` with multiple grid input
+"""
 function marching_triangles(
-        coords::Vector{Matrix{Tv}},
+        coords::Vector{Matrix{Tc}},
         cellnodes::Vector{Matrix{Ti}},
         funcs,
+        lines,
         levels;
-        Tc = Float32,
-        Tp = SVector{2, Tc}
-    ) where {Tv <: Number, Ti <: Number}
+        Tv = Float32,
+        Tp = SVector{2, Tv},
+    ) where {Tc <: Number, Ti <: Number}
     points = Vector{Tp}(undef, 0)
+    values = Vector{Tv}(undef, 0)
+    adjacencies = Vector{SVector{2, Ti}}(undef, 0)
 
     for igrid in 1:length(coords)
         func = funcs[igrid]
         coord = coords[igrid]
 
-        function isect(nodes)
+        # pre-allcate memory
+        objective_values = Vector{Tv}(undef, size(coord, 2))
+
+        # the objective_func is used to determine the intersection (line equation or iso levels)
+        # the value_func is used to interpolate values at the intersections
+        function isect(nodes, objective_func, value_func)
             (i1, i2, i3) = (1, 2, 3)
 
-            f = (func[nodes[1]], func[nodes[2]], func[nodes[3]])
+            f = (objective_func[nodes[1]], objective_func[nodes[2]], objective_func[nodes[3]])
 
+            # sort f[i1] ≤ f[i2] ≤ f[i3]
             f[1] <= f[2] ? (i1, i2) = (1, 2) : (i1, i2) = (2, 1)
             f[i2] <= f[3] ? i3 = 3 : (i2, i3) = (3, i2)
             f[i1] > f[i2] ? (i1, i2) = (i2, i1) : nothing
@@ -305,35 +337,63 @@ function marching_triangles(
             dy21 = coord[2, n2] - coord[2, n1]
             dy32 = coord[2, n3] - coord[2, n2]
 
-            df31 = f[i3] != f[i1] ? 1 / (f[i3] - f[i1]) : 0.0
-            df21 = f[i2] != f[i1] ? 1 / (f[i2] - f[i1]) : 0.0
-            df32 = f[i3] != f[i2] ? 1 / (f[i3] - f[i2]) : 0.0
+            df31 = f[i3] != f[i1] ? 1 / (f[i1] - f[i3]) : 0.0
+            df21 = f[i2] != f[i1] ? 1 / (f[i1] - f[i2]) : 0.0
+            df32 = f[i3] != f[i2] ? 1 / (f[i2] - f[i3]) : 0.0
 
-            for level in levels
-                if (f[i1] <= level) && (level < f[i3])
-                    α = (level - f[i1]) * df31
-                    x1 = coord[1, n1] + α * dx31
-                    y1 = coord[2, n1] + α * dy31
+            if (f[i1] <= 0) && (0 < f[i3])
+                α = f[i1] * df31
+                x1 = coord[1, n1] + α * dx31
+                y1 = coord[2, n1] + α * dy31
+                value1 = value_func[n1] + α * (value_func[n3] - value_func[n1])
 
-                    if (level < f[i2])
-                        α = (level - f[i1]) * df21
-                        x2 = coord[1, n1] + α * dx21
-                        y2 = coord[2, n1] + α * dy21
-                    else
-                        α = (level - f[i2]) * df32
-                        x2 = coord[1, n2] + α * dx32
-                        y2 = coord[2, n2] + α * dy32
-                    end
-                    push!(points, SVector{2, Tc}((x1, y1)))
-                    push!(points, SVector{2, Tc}((x2, y2)))
+                if (0 < f[i2])
+                    α = f[i1] * df21
+                    x2 = coord[1, n1] + α * dx21
+                    y2 = coord[2, n1] + α * dy21
+                    value2 = value_func[n1] + α * (value_func[n2] - value_func[n1])
+                else
+                    α = f[i2] * df32
+                    x2 = coord[1, n2] + α * dx32
+                    y2 = coord[2, n2] + α * dy32
+                    value2 = value_func[n2] + α * (value_func[n3] - value_func[n2])
                 end
+
+                push!(points, SVector{2, Tc}((x1, y1)))
+                push!(points, SVector{2, Tc}((x2, y2)))
+                push!(values, value1)
+                push!(values, value2)
+                # connect last two points
+                push!(adjacencies, SVector{2, Ti}((length(points) - 1, length(points))))
             end
+
             return
         end
 
         for itri in 1:size(cellnodes[igrid], 2)
-            @views isect(cellnodes[igrid][:, itri])
+            for level in levels
+                # objective func is iso-level equation
+                @views @fastmath map!(
+                    inode -> (func[inode] - level),
+                    objective_values,
+                    1:size(coord, 2)
+                )
+                @views isect(cellnodes[igrid][:, itri], objective_values, func)
+            end
+
+            for line in lines
+                @fastmath line_equation(line, coord) = coord[1] * line[1] + coord[2] * line[2] + line[3]
+
+                # objective func is iso-level equation
+                @views @fastmath map!(
+                    inode -> (line_equation(line, coord[:, inode])),
+                    objective_values,
+                    1:size(coord, 2)
+                )
+                @views isect(cellnodes[igrid][:, itri], objective_values, func)
+            end
+
         end
     end
-    return points
+    return points, adjacencies, values
 end
