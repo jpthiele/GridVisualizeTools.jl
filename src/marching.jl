@@ -312,22 +312,23 @@ function marching_triangles(
         func = funcs[igrid]
         coord = coords[igrid]
 
-        # pre-allcate memory
-        objective_values = Vector{Tv}(undef, size(coord, 2))
+        # pre-allcate memory for triangle values (3 nodes per triangle)
+        objective_values = Vector{Tv}(undef, 3)
 
         # the objective_func is used to determine the intersection (line equation or iso levels)
         # the value_func is used to interpolate values at the intersections
-        function isect(nodes, objective_func, value_func)
+        function isect(tri_nodes, objective_func, value_func)
             (i1, i2, i3) = (1, 2, 3)
 
-            f = (objective_func[nodes[1]], objective_func[nodes[2]], objective_func[nodes[3]])
+            # 3 values of the objective function
+            f = objective_func
 
             # sort f[i1] ≤ f[i2] ≤ f[i3]
             f[1] <= f[2] ? (i1, i2) = (1, 2) : (i1, i2) = (2, 1)
             f[i2] <= f[3] ? i3 = 3 : (i2, i3) = (3, i2)
             f[i1] > f[i2] ? (i1, i2) = (i2, i1) : nothing
 
-            (n1, n2, n3) = (nodes[i1], nodes[i2], nodes[i3])
+            (n1, n2, n3) = (tri_nodes[i1], tri_nodes[i2], tri_nodes[i3])
 
             dx31 = coord[1, n3] - coord[1, n1]
             dx21 = coord[1, n2] - coord[1, n1]
@@ -371,14 +372,18 @@ function marching_triangles(
         end
 
         for itri in 1:size(cellnodes[igrid], 2)
+
+            # nodes of the current triangle
+            tri_nodes = @views cellnodes[igrid][:, itri]
+
             for level in levels
                 # objective func is iso-level equation
                 @views @fastmath map!(
                     inode -> (func[inode] - level),
                     objective_values,
-                    1:size(coord, 2)
+                    tri_nodes
                 )
-                @views isect(cellnodes[igrid][:, itri], objective_values, func)
+                @views isect(tri_nodes, objective_values, func)
             end
 
             for line in lines
@@ -388,9 +393,9 @@ function marching_triangles(
                 @views @fastmath map!(
                     inode -> (line_equation(line, coord[:, inode])),
                     objective_values,
-                    1:size(coord, 2)
+                    tri_nodes
                 )
-                @views isect(cellnodes[igrid][:, itri], objective_values, func)
+                @views isect(tri_nodes, objective_values, func)
             end
 
         end
